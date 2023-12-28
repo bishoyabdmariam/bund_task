@@ -7,10 +7,12 @@ class WhatYouGetCard extends StatelessWidget {
     Key? key,
     required this.text,
     required this.image,
+    required this.isEnabled,
   }) : super(key: key);
 
   final String image;
   final String text;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,14 @@ class WhatYouGetCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image),
+          Image.asset(image,color: isEnabled?const Color(0xFF0B1222): Colors.grey[200]),
           const SizedBox(
             height: 8,
           ),
           Center(
             child: Text(
               text,
-              style: Styles.style12,
+              style: isEnabled? Styles.style12 : Styles.style12NotEnabled,
             ),
           ),
         ],

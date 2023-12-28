@@ -20,6 +20,18 @@ abstract class Styles {
     fontFamily: 'Lato',
     fontWeight: FontWeight.w600,
   );
+  static  TextStyle style12NotEnabled = TextStyle(
+    color: Colors.grey[100],
+    fontSize: 12,
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle style12BottomNavBar = TextStyle(
+    color: Color(0xFFA4AABB),
+    fontSize: 12,
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.w500,
+  );
   static const TextStyle style16Bold = TextStyle(
     color: Color(0xFF495677),
     fontSize: 16,
