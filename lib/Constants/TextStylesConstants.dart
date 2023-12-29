@@ -95,7 +95,7 @@ abstract class Styles {
   );
 
   static const TextStyle style14Bold = TextStyle(
-    color: Color(0xFF162344),
+    color: Color(0xFF495677),
     fontSize: 14,
     fontFamily: 'Lato',
     fontWeight: FontWeight.w600,
