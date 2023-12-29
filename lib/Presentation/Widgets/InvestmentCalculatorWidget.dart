@@ -25,6 +25,10 @@ class _InvestmentCalculatorWidgetState
   Timer? incrementTimer;
   bool isUserPress = false;
 
+  double annualYieldToMaturity = .0681; // Replace with your actual value
+
+  int selectedTerm= 3;
+
   @override
   void dispose() {
     incrementTimer?.cancel();
@@ -32,27 +36,59 @@ class _InvestmentCalculatorWidgetState
   }
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     loadInvestmentAmount();
+    loadSelectedTerm();
   }
+
+  Future<void> loadSelectedTerm() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      if (preferences.getBool("isFirstContainerPressed") == null ||
+          preferences.getBool("isFirstContainerPressed")==true) {
+        selectedTerm = 3;
+      } else {
+        selectedTerm = 5;
+      }
+    });
+  }
+
 
   // Load investment amount from SharedPreferences
   Future<void> loadInvestmentAmount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      investmentAmount = prefs.getInt('investmentAmount') ?? 10000;
+      investmentAmount = preferences.getInt('investmentAmount') ?? 10000;
     });
   }
 
   // Save investment amount to SharedPreferences
   Future<void> saveInvestmentAmount(int amount) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('investmentAmount', amount);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setInt('investmentAmount', amount);
   }
 
   @override
   Widget build(BuildContext context) {
+    double capitalAtMaturity =
+        (investmentAmount * annualYieldToMaturity * selectedTerm) +
+            investmentAmount;
+
+    double totalInterest = annualYieldToMaturity* selectedTerm * investmentAmount;
+
+    double annualInterest = investmentAmount * annualYieldToMaturity;
+
+    int averageMaturityDate = DateTime.now().year+selectedTerm;
+
+    loadSelectedTerm();
+
+    /*
+    * Capital at Maturity: Capital at Maturity = (Annual Yield to Maturity * Term * Amount) + Amount
+Total Interest: Total Interest = Annual Yield to Maturity * Term * Amount
+Annual Interest: Annual Interest = Amount * Annual Yield to Maturity
+Average Maturity Date: Calculate and display the maturity date based on the selected term and today’s date shown in years.
+*/
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -202,7 +238,7 @@ class _InvestmentCalculatorWidgetState
             ),
           ),
           SizedBoxes.box20height,
-          TermSelectionWidget(),
+          const TermSelectionWidget(),
           SizedBoxes.box20height,
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,15 +253,15 @@ class _InvestmentCalculatorWidgetState
               ),
             ],
           ),
-          const Row(
+           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "\$10,681",
+                "\$${capitalAtMaturity.toStringAsFixed(0)}",
                 style: Styles.style22Rating,
               ),
               Text(
-                "\$681",
+                "\$${totalInterest.toStringAsFixed(0)}",
                 style: Styles.style22Rating,
               ),
             ],
@@ -244,15 +280,15 @@ class _InvestmentCalculatorWidgetState
               ),
             ],
           ),
-          const Row(
+           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "\$68.1",
+                "\$${annualInterest.toStringAsFixed(0)}",
                 style: Styles.style22Rating,
               ),
               Text(
-                "2026",
+                averageMaturityDate.toString(),
                 style: Styles.style22Rating,
               ),
             ],

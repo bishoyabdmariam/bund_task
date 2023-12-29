@@ -1,14 +1,39 @@
 import 'package:bundtask/Constants/SizedBoxesConstants.dart';
 import 'package:bundtask/Constants/TextStylesConstants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TermSelectionWidget extends StatefulWidget {
+  const TermSelectionWidget({Key? key});
+
   @override
   _TermSelectionWidgetState createState() => _TermSelectionWidgetState();
 }
 
 class _TermSelectionWidgetState extends State<TermSelectionWidget> {
-  bool isFirstContainerPressed = true;
+  late bool isFirstContainerPressed;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load the selected term from SharedPreferences
+    loadSelectedTerm();
+  }
+
+  // Load selected term from SharedPreferences
+  Future<void> loadSelectedTerm() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isFirstContainerPressed =
+          prefs.getBool('isFirstContainerPressed') ?? true;
+    });
+  }
+
+  // Save selected term to SharedPreferences
+  Future<void> saveSelectedTerm(bool isFirstPressed) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstContainerPressed', isFirstPressed);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +53,8 @@ class _TermSelectionWidgetState extends State<TermSelectionWidget> {
               setState(() {
                 if (!isFirstContainerPressed) {
                   isFirstContainerPressed = !isFirstContainerPressed;
+                  // Save the updated term selection
+                  saveSelectedTerm(isFirstContainerPressed);
                 }
               });
             },
@@ -50,6 +77,8 @@ class _TermSelectionWidgetState extends State<TermSelectionWidget> {
               setState(() {
                 if (isFirstContainerPressed) {
                   isFirstContainerPressed = !isFirstContainerPressed;
+                  // Save the updated term selection
+                  saveSelectedTerm(isFirstContainerPressed);
                 }
               });
             },
