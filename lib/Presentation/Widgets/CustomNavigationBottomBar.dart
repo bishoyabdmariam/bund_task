@@ -1,3 +1,4 @@
+import 'package:bundtask/Presentation/Screens/InvestmentScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constants/TextStylesConstants.dart';
@@ -36,7 +37,9 @@ class CustomNavigationBottomBar extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 9,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InvestmentScreen()));
+            },
             icon: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

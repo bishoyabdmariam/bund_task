@@ -4,7 +4,7 @@ import 'package:bundtask/Presentation/Widgets/WhatYouGetCard.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/DataModels.dart';
+import '../../data/models/DataModels.dart';
 import '../Widgets/ConditionsCard.dart';
 import '../Widgets/CustomNavigationBottomBar.dart';
 import '../Widgets/OurCustomIndicator.dart';
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ],
                                           ),
                                         ),
-                                      ))
+                                      )),
                                 ],
                               ),
                               Image.asset(company.image,

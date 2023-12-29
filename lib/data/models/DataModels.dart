@@ -1,4 +1,3 @@
-
 class Company {
   final String name;
   final String category;
