@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../Constants/SizedBoxesConstants.dart';
 import '../../Constants/TextStylesConstants.dart';
@@ -19,7 +21,7 @@ class InvestmentCalculatorWidget extends StatefulWidget {
 
 class _InvestmentCalculatorWidgetState
     extends State<InvestmentCalculatorWidget> {
-  double investmentAmount = 10000;
+  int investmentAmount = 10000;
   Timer? incrementTimer;
   bool isUserPress = false;
 
@@ -27,6 +29,26 @@ class _InvestmentCalculatorWidgetState
   void dispose() {
     incrementTimer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadInvestmentAmount();
+  }
+
+  // Load investment amount from SharedPreferences
+  Future<void> loadInvestmentAmount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      investmentAmount = prefs.getInt('investmentAmount') ?? 10000;
+    });
+  }
+
+  // Save investment amount to SharedPreferences
+  Future<void> saveInvestmentAmount(int amount) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('investmentAmount', amount);
   }
 
   @override
@@ -68,14 +90,16 @@ class _InvestmentCalculatorWidgetState
                       );
                     }
                   });
+                  saveInvestmentAmount(investmentAmount);
                 },
-                onLongPress: () {
+                onLongPress: () async {
                   setState(() {
                     isUserPress = true;
                   });
                   if (isUserPress) {
                     incrementTimer =
                         Timer.periodic(const Duration(seconds: 2), (timer) {
+                      Vibration.vibrate();
                       setState(() {
                         if (investmentAmount > 250 &&
                             investmentAmount - 1000 > 250) {
@@ -91,6 +115,7 @@ class _InvestmentCalculatorWidgetState
                     isUserPress = false;
                     incrementTimer?.cancel();
                   });
+                  saveInvestmentAmount(investmentAmount);
                 },
                 /*onLongPressDown: (_) {
                   print("onDown");
@@ -118,7 +143,7 @@ class _InvestmentCalculatorWidgetState
                 ),
               ),
               Text(
-                "\$${investmentAmount.toStringAsFixed(2)}",
+                "\$$investmentAmount",
                 style: Styles.style36,
               ),
               GestureDetector(
@@ -129,6 +154,7 @@ class _InvestmentCalculatorWidgetState
                   if (isUserPress) {
                     incrementTimer =
                         Timer.periodic(const Duration(seconds: 2), (timer) {
+                      Vibration.vibrate();
                       setState(() {
                         investmentAmount += 1000;
                       });
@@ -141,6 +167,7 @@ class _InvestmentCalculatorWidgetState
                     isUserPress = false;
                     incrementTimer?.cancel();
                   });
+                  saveInvestmentAmount(investmentAmount);
                 },
                 onTap: () {
                   setState(() {
@@ -150,6 +177,7 @@ class _InvestmentCalculatorWidgetState
                       investmentAmount += 1000;
                     }
                   });
+                  saveInvestmentAmount(investmentAmount);
                 },
                 child: const CustomCalculationIcons(
                   icon: Icons.add,
