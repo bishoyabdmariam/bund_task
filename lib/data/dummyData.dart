@@ -162,15 +162,4 @@ static  List<Company> dummyCompanies = [
     ],
   ),
 ];
-
-
-static List<Bond> dummyBonds = [
-  Bond(image: "assets/images/image 13.png", title: "Netflix INC", subTitle: "BBB", data: "5.37% APY",),
-  Bond(image: "assets/images/image 14.png", title: "Ford Motor LLC", subTitle: "BB+", data: "7.71% APY",),
-  Bond(image: "assets/images/image 15.png", title: "Apple INC", subTitle: "AA+", data: "4.85% APY",),
-  Bond(image: "assets/images/Intersect.png", title: "Morgan Stanley", subTitle: "A-", data: "6.27% APY",),
-];
-
-
-
 }

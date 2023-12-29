@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../Constants/SizedBoxesConstants.dart';
@@ -5,10 +7,27 @@ import '../../Constants/TextStylesConstants.dart';
 import 'CustomCalculationIcons.dart';
 import 'TermSelectionWidget.dart';
 
-class InvestmentCalculatorWidget extends StatelessWidget {
+class InvestmentCalculatorWidget extends StatefulWidget {
   const InvestmentCalculatorWidget({
     super.key,
   });
+
+  @override
+  State<InvestmentCalculatorWidget> createState() =>
+      _InvestmentCalculatorWidgetState();
+}
+
+class _InvestmentCalculatorWidgetState
+    extends State<InvestmentCalculatorWidget> {
+  double investmentAmount = 10000;
+  Timer? incrementTimer;
+  bool isUserPress = false;
+
+  @override
+  void dispose() {
+    incrementTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +36,7 @@ class InvestmentCalculatorWidget extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(7),
       ),
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           const Text(
@@ -28,18 +47,111 @@ class InvestmentCalculatorWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const CustomCalculationIcons(
-                    icon: Icons.remove,
-                  )),
-              const Text(
-                "\$10,000",
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (investmentAmount > 10000 &&
+                        investmentAmount - 10000 > 250) {
+                      investmentAmount -= 10000;
+                    } else if (investmentAmount > 250 &&
+                        investmentAmount - 1000 > 250) {
+                      investmentAmount -= 1000;
+                    } else {
+                      investmentAmount = 250;
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Center(
+                            child: Text("250\$ is the least amount"),
+                          ),
+                        ),
+                      );
+                    }
+                  });
+                },
+                onLongPress: () {
+                  setState(() {
+                    isUserPress = true;
+                  });
+                  if (isUserPress) {
+                    incrementTimer =
+                        Timer.periodic(const Duration(seconds: 2), (timer) {
+                      setState(() {
+                        if (investmentAmount > 250 &&
+                            investmentAmount - 1000 > 250) {
+                          investmentAmount -= 1000;
+                        }
+                      });
+                    });
+                  }
+                },
+                onLongPressEnd: (_) {
+                  print("onEnd");
+                  setState(() {
+                    isUserPress = false;
+                    incrementTimer?.cancel();
+                  });
+                },
+                /*onLongPressDown: (_) {
+                  print("onDown");
+                  setState(() {
+                    isUserPress = false;
+                    incrementTimer?.cancel();
+                  });
+                },*/
+                /*onLongPressUp: () {
+                  print("onUp");
+                  setState(() {
+                    isUserPress = false;
+                    incrementTimer?.cancel();
+                  });
+                },*/
+                /*onLongPressCancel: () {
+                  print("onCancel");
+                  setState(() {
+                    isUserPress = false;
+                    incrementTimer?.cancel();
+                  });
+                },*/
+                child: const CustomCalculationIcons(
+                  icon: Icons.remove,
+                ),
+              ),
+              Text(
+                "\$${investmentAmount.toStringAsFixed(2)}",
                 style: Styles.style36,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const CustomCalculationIcons(
+              GestureDetector(
+                onLongPress: () {
+                  setState(() {
+                    isUserPress = true;
+                  });
+                  if (isUserPress) {
+                    incrementTimer =
+                        Timer.periodic(const Duration(seconds: 2), (timer) {
+                      setState(() {
+                        investmentAmount += 1000;
+                      });
+                    });
+                  }
+                },
+                onLongPressEnd: (_) {
+                  print("onEnd");
+                  setState(() {
+                    isUserPress = false;
+                    incrementTimer?.cancel();
+                  });
+                },
+                onTap: () {
+                  setState(() {
+                    if (investmentAmount > 10000) {
+                      investmentAmount += 10000;
+                    } else {
+                      investmentAmount += 1000;
+                    }
+                  });
+                },
+                child: const CustomCalculationIcons(
                   icon: Icons.add,
                 ),
               ),
