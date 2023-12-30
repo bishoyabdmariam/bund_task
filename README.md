@@ -1,16 +1,67 @@
-# bundtask
 
-A new Flutter project.
+# Bund Flutter Task
 
-## Getting Started
+An app for creating investment accounts
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## API Reference
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### Get Companies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```http
+  POST / https://httpbin.org/anything
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `list<Company>` | response with the same data |
+
+#### returns list of Companies
+
+Takes 4 Companies and returns the same.
+
+#### Get Bonds
+
+```http
+  POST / https://httpbin.org/anything
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `list<Bond>` | response with the same data |
+
+#### returns list of Bonds
+
+Takes 4 Bonds and returns the same.
+
+## Features
+
+- save the last investment cash on the device
+- swap between our investment types
+- animations when swaping
+- investment calculator
+- some user experience with vibration
+- Mock Api Integration
+- pull to refresh
+- UI design as it in Figma file
+- portrait mode
+- Cross platform
+
+## Packages
+
+- dio (for mock api integration)
+- crausal Slider (for swaping between our investment accounts)
+- shared preferences (for save the last user investment number)
+- vibration (for vibrate when the user hold on the button)
+
+
+## 🚀 About Me
+I'm a flutter developer , I graduated from faculty of computer science Helwan university
+
+
+## Running Tests
+
+There is in the app I have written Integration and functional tests on main features in the app like Api Integration and also the calculation
+## Used By
+
+- Bünd
