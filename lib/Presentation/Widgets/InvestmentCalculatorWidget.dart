@@ -136,7 +136,6 @@ class _InvestmentCalculatorWidgetState
                   }
                 },
                 onLongPressEnd: (_) {
-                  print("onEnd");
                   setState(() {
                     isUserPress = false;
                     incrementTimer?.cancel();
@@ -188,7 +187,6 @@ class _InvestmentCalculatorWidgetState
                   }
                 },
                 onLongPressEnd: (_) {
-                  print("onEnd");
                   setState(() {
                     isUserPress = false;
                     incrementTimer?.cancel();

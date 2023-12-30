@@ -1,17 +1,17 @@
-import 'package:bundtask/Constants/SizedBoxesConstants.dart';
 import 'package:bundtask/Constants/TextStylesConstants.dart';
+import 'package:bundtask/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TermSelectionWidget extends StatefulWidget {
-  const TermSelectionWidget({Key? key});
+  const TermSelectionWidget({super.key});
 
   @override
   _TermSelectionWidgetState createState() => _TermSelectionWidgetState();
 }
 
 class _TermSelectionWidgetState extends State<TermSelectionWidget> {
-  late bool isFirstContainerPressed;
+  late bool isFirstContainerPressed =true;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _TermSelectionWidgetState extends State<TermSelectionWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          height: 37,
+          height: MyApp.screenHeight/22,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: isFirstContainerPressed

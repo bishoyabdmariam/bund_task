@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../data/models/CompanyModels.dart';
-import '../Screens/HomeScreen.dart';
 class OurCustomIndicator extends StatelessWidget {
   const OurCustomIndicator({
     super.key,

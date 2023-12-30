@@ -1,3 +1,4 @@
+import 'package:bundtask/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constants/TextStylesConstants.dart';
@@ -20,8 +21,8 @@ class ConditionsCard extends StatelessWidget {
           color: Colors.white,
 
         ),
-        width: MediaQuery.of(context).size.width / 2.6,
-        height: MediaQuery.of(context).size.width / 3,
+        width: MyApp.screenWidth / 2.6,
+        height: MyApp.screenHeight / 6.6,
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
           vertical: 16,

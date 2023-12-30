@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bundtask/ApiServices/BondsService.dart';
 import 'package:bundtask/Constants/SizedBoxesConstants.dart';
@@ -6,7 +5,7 @@ import 'package:bundtask/Constants/TextStylesConstants.dart';
 import 'package:bundtask/Presentation/Widgets/EmptyData.dart';
 import 'package:bundtask/Presentation/Widgets/ErrorWidget.dart';
 import 'package:bundtask/Presentation/Widgets/LoadingWidget.dart';
-import 'package:dio/dio.dart';
+import 'package:bundtask/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/BondsModel.dart';
@@ -28,7 +27,7 @@ class _InvestmentScreenState extends State<InvestmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        height: 72,
+        height: MyApp.screenHeight/10,
         padding: const EdgeInsets.symmetric(
           vertical: 11,
           horizontal: 18.5,

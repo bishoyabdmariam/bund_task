@@ -1,4 +1,5 @@
 import 'package:bundtask/Presentation/Screens/InvestmentScreen.dart';
+import 'package:bundtask/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../Constants/TextStylesConstants.dart';
@@ -11,7 +12,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 65,
+      height: MyApp.screenHeight/12.3,
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,7 +35,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 9,
+            width: MyApp.screenWidth / 9,
           ),
           IconButton(
             onPressed: () {
