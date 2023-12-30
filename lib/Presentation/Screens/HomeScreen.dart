@@ -41,9 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBoxes.box10height,
                 BankCardWidget(
-                    buttonCarouselController: buttonCarouselController,
-                    companies: companies,
-                    currentPage: _currentPage),
+                  buttonCarouselController: buttonCarouselController,
+                  companies: companies,
+                  currentPage: _currentPage,
+                ),
               ],
             );
           }
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar buildCustomAppBar() {
     return AppBar(
       backgroundColor: Colors.grey[200],
-      leadingWidth: MyApp.screenWidth/4.8,
+      leadingWidth: MyApp.screenWidth / 4.8,
       leading: Padding(
         padding: const EdgeInsets.only(
           right: 8.0,

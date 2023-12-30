@@ -1,3 +1,4 @@
+import 'package:bundtask/ApiServices/CompaniesService.dart';
 import 'package:bundtask/main.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,6 +10,7 @@ import '../../data/models/CompanyModels.dart';
 import 'ConditionsCard.dart';
 import 'OurCustomIndicator.dart';
 import 'WhatYouGetCard.dart';
+
 class BankCardWidget extends StatefulWidget {
   const BankCardWidget({
     super.key,
@@ -26,13 +28,18 @@ class BankCardWidget extends StatefulWidget {
 }
 
 class _BankCardWidgetState extends State<BankCardWidget> {
-
   late int currentPage;
 
   @override
   void initState() {
     super.initState();
     currentPage = widget.currentPage;
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(const Duration(seconds: 2));
+    CompanyService.fetchCompanies();
+    setState(() {});
   }
 
   @override
@@ -52,118 +59,124 @@ class _BankCardWidgetState extends State<BankCardWidget> {
         items: widget.companies.map((company) {
           return Builder(
             builder: (BuildContext context) {
-              return ListView(
-                children: [
-                  Container(
-                    width: MyApp.screenWidth,
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 24),
-                    decoration: const BoxDecoration(color: Colors.white),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBoxes.box10height,
-                            Text(
-                              company.name,
-                              style: Styles.style23Bold,
-                            ),
-                            Text(
-                              company.category,
-                              style: Styles.style23,
-                            ),
-                            SizedBoxes.box18height,
-                            IconButton(
-                                onPressed: () {},
-                                icon: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.grey[200],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0, vertical: 8),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                            "assets/images/arrow-2.png"),
-                                        SizedBoxes.box4width,
-                                        const Text(
-                                          "Start Now",
-                                          style: Styles.style13,
-                                        ),
-                                      ],
+              return RefreshIndicator(
+                onRefresh: _refresh,
+                color: Colors.green,
+                child: ListView(
+                  children: [
+                    Container(
+                      width: MyApp.screenWidth,
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 24),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBoxes.box10height,
+                              Text(
+                                company.name,
+                                style: Styles.style23Bold,
+                              ),
+                              Text(
+                                company.category,
+                                style: Styles.style23,
+                              ),
+                              SizedBoxes.box18height,
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.grey[200],
                                     ),
-                                  ),
-                                )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 8),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                              "assets/images/arrow-2.png"),
+                                          SizedBoxes.box4width,
+                                          const Text(
+                                            "Start Now",
+                                            style: Styles.style13,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          Image.asset(
+                            company.image,
+                            fit: BoxFit.fill,
+                            width: MyApp.screenWidth / 3,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBoxes.box10height,
+                    OurCustomIndicator(
+                      companies: widget.companies,
+                      currentPage: currentPage,
+                    ),
+                    SizedBoxes.box10height,
+                    Column(
+                      children: [
+                        const Row(
+                          children: [
+                            Text(
+                              "Conditions",
+                              style: Styles.style16Bold,
+                            ),
                           ],
                         ),
-                        Image.asset(company.image,
-                            fit: BoxFit.fill,
-                            width: MyApp.screenWidth / 3),
+                        SizedBoxes.box16height,
+                        Wrap(
+                          spacing: MyApp.screenWidth / 35,
+                          runSpacing: 16,
+                          children: [
+                            for (Condition condition in company.conditions)
+                              ConditionsCard(
+                                image: condition.image,
+                                text: condition.text,
+                              ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                  ),
-                  SizedBoxes.box10height,
-                  OurCustomIndicator(
-                    companies: widget.companies,
-                    currentPage: currentPage,
-                  ),
-                  SizedBoxes.box10height,
-                  Column(
-                    children: [
-                      const Row(
-                        children: [
-                          Text(
-                            "Conditions",
-                            style: Styles.style16Bold,
-                          ),
-                        ],
-                      ),
-                      SizedBoxes.box16height,
-                      Wrap(
-                        spacing: MyApp.screenWidth / 35,
-                        runSpacing: 16,
-                        children: [
-                          for (Condition condition in company.conditions)
-                            ConditionsCard(
-                              image: condition.image,
-                              text: condition.text,
-                            ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBoxes.box14height,
-                  const Row(
-                    children: [
-                      Text(
-                        "What You Get",
-                        style: Styles.style16Bold,
-                      ),
-                    ],
-                  ),
-                  SizedBoxes.box16height,
-                  Wrap(
-                    spacing: MyApp.screenWidth / 40,
-                    runSpacing: 16,
-                    direction: Axis.horizontal,
-                    children: [
-                      for (WhatYouGet whatYouGet in company.whatYouGet)
-                        WhatYouGetCard(
-                          isEnabled: whatYouGet.isEnabled,
-                          image: whatYouGet.image,
-                          text: whatYouGet.text,
+                    SizedBoxes.box14height,
+                    const Row(
+                      children: [
+                        Text(
+                          "What You Get",
+                          style: Styles.style16Bold,
                         ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBoxes.box16height,
+                    Wrap(
+                      spacing: MyApp.screenWidth / 40,
+                      runSpacing: 16,
+                      direction: Axis.horizontal,
+                      children: [
+                        for (WhatYouGet whatYouGet in company.whatYouGet)
+                          WhatYouGetCard(
+                            isEnabled: whatYouGet.isEnabled,
+                            image: whatYouGet.image,
+                            text: whatYouGet.text,
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             },
           );
