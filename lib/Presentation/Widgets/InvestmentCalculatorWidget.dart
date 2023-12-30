@@ -27,7 +27,7 @@ class _InvestmentCalculatorWidgetState
 
   double annualYieldToMaturity = .0681; // Replace with your actual value
 
-  int selectedTerm= 3;
+  int selectedTerm = 3;
 
   @override
   void dispose() {
@@ -36,7 +36,7 @@ class _InvestmentCalculatorWidgetState
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     loadInvestmentAmount();
     loadSelectedTerm();
@@ -46,14 +46,13 @@ class _InvestmentCalculatorWidgetState
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       if (preferences.getBool("isFirstContainerPressed") == null ||
-          preferences.getBool("isFirstContainerPressed")==true) {
+          preferences.getBool("isFirstContainerPressed") == true) {
         selectedTerm = 3;
       } else {
         selectedTerm = 5;
       }
     });
   }
-
 
   // Load investment amount from SharedPreferences
   Future<void> loadInvestmentAmount() async {
@@ -74,9 +73,10 @@ class _InvestmentCalculatorWidgetState
     double capitalAtMaturity =
         (investmentAmount * annualYieldToMaturity * selectedTerm) +
             investmentAmount;
-    double totalInterest = annualYieldToMaturity* selectedTerm * investmentAmount;
+    double totalInterest =
+        annualYieldToMaturity * selectedTerm * investmentAmount;
     double annualInterest = investmentAmount * annualYieldToMaturity;
-    int averageMaturityDate = DateTime.now().year+selectedTerm;
+    int averageMaturityDate = DateTime.now().year + selectedTerm;
     loadSelectedTerm();
 
     return Container(
@@ -127,9 +127,22 @@ class _InvestmentCalculatorWidgetState
                         Timer.periodic(const Duration(seconds: 2), (timer) {
                       Vibration.vibrate();
                       setState(() {
-                        if (investmentAmount > 250 &&
+                        if (investmentAmount > 10000 &&
+                            investmentAmount - 10000 > 250) {
+                          investmentAmount -= 10000;
+                        } else if (investmentAmount > 250 &&
                             investmentAmount - 1000 > 250) {
                           investmentAmount -= 1000;
+                        } else {
+                          investmentAmount = 250;
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Center(
+                                child: Text("250\$ is the least amount"),
+                              ),
+                            ),
+                          );
                         }
                       });
                     });
@@ -181,7 +194,11 @@ class _InvestmentCalculatorWidgetState
                         Timer.periodic(const Duration(seconds: 2), (timer) {
                       Vibration.vibrate();
                       setState(() {
-                        investmentAmount += 1000;
+                        if (investmentAmount > 10000) {
+                          investmentAmount += 10000;
+                        } else {
+                          investmentAmount += 1000;
+                        }
                       });
                     });
                   }
@@ -241,7 +258,7 @@ class _InvestmentCalculatorWidgetState
               ),
             ],
           ),
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -268,7 +285,7 @@ class _InvestmentCalculatorWidgetState
               ),
             ],
           ),
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(

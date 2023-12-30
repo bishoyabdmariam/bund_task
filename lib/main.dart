@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'Presentation/Screens/HomeScreen.dart';
 
@@ -14,6 +15,12 @@ class MyApp extends StatelessWidget {
   static double screenHeight = 0.0;
   @override
   Widget build(BuildContext context) {
+
+    // it's not clear in documentation about is the app is enabled to use in landscape mode or not so I prevent it
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return  const MaterialApp(
