@@ -1,33 +1,35 @@
 import 'dart:convert';
 
 import 'package:bundtask/data/dummyData.dart';
-import 'package:bundtask/data/models/CompanyModels.dart';
 import 'package:dio/dio.dart';
 
-class CompanyService {
-  static Future<List<Company>> fetchCompanies() async {
+import '../data/models/BondsModel.dart';
+
+class BondService{
+
+  static Future<List<Bond>> fetchBonds() async {
     Dio dio = Dio();
     String apiUrl = 'https://httpbin.org/anything';
 
     try {
-      // Convert the list of Company objects to a list of JSON maps
-      List<Map<String, dynamic>> companyJsonList =
-      DummyData.dummyCompanies.map((company) => company.toJson()).toList();
+      // Convert the list of Bond objects to a list of JSON maps
+      List<Map<String, dynamic>> bondJsonList =
+      DummyData.dummyBonds.map((bond) => bond.toJson()).toList();
 
       // Make the HTTP POST request
-      Response response = await dio.post(apiUrl, data: {'data': companyJsonList});
+      Response response = await dio.post(apiUrl, data: {'data': bondJsonList});
 
-      // Parse the response and convert it back to a list of Company objects
+      // Parse the response and convert it back to a list of Bond objects
       Map<String, dynamic> responseData = response.data;
       if (responseData.containsKey('data')) {
         dynamic data = responseData['data'];
         if (data is String) {
           // Parse the data string
           List<dynamic> parsedData = jsonDecode(data)['data'];
-          List<Company> companies = parsedData
-              .map((json) => Company.fromJson(json as Map<String, dynamic>))
+          List<Bond> bonds = parsedData
+              .map((json) => Bond.fromJson(json as Map<String, dynamic>))
               .toList();
-          return companies;
+          return bonds;
         } else {
           // Handle the case where the 'data' field is not a string
           print("Error: 'data' field is not a string");

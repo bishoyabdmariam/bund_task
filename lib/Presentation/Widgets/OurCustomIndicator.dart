@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/CompanyModels.dart';
 import '../Screens/HomeScreen.dart';
 class OurCustomIndicator extends StatelessWidget {
   const OurCustomIndicator({
     super.key,
-    required this.widget,
+    required this.companies,
     required int currentPage,
   }) : _currentPage = currentPage;
 
-  final HomeScreen widget;
   final int _currentPage;
+  final List<Company> companies;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(widget.companies.length, (index) {
+      children: List.generate(companies.length, (index) {
         return Container(
           width: 8.0,
           height: 8.0,

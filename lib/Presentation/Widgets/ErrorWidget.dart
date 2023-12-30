@@ -7,9 +7,14 @@ class ErrorWidgetHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Sorry but there is a problem Contact Us on 01202089993",
+    return const Padding(
+      padding: EdgeInsets.all(20.0),
+      child: Center(
+        child: Text(
+          "Sorry but there is a problem , Please Contact Us on 01202089993",
+          style: TextStyle(fontSize: 20),
+
+        ),
       ),
     );
   }

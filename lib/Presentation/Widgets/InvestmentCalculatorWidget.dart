@@ -74,21 +74,11 @@ class _InvestmentCalculatorWidgetState
     double capitalAtMaturity =
         (investmentAmount * annualYieldToMaturity * selectedTerm) +
             investmentAmount;
-
     double totalInterest = annualYieldToMaturity* selectedTerm * investmentAmount;
-
     double annualInterest = investmentAmount * annualYieldToMaturity;
-
     int averageMaturityDate = DateTime.now().year+selectedTerm;
-
     loadSelectedTerm();
 
-    /*
-    * Capital at Maturity: Capital at Maturity = (Annual Yield to Maturity * Term * Amount) + Amount
-Total Interest: Total Interest = Annual Yield to Maturity * Term * Amount
-Annual Interest: Annual Interest = Amount * Annual Yield to Maturity
-Average Maturity Date: Calculate and display the maturity date based on the selected term and today’s date shown in years.
-*/
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
