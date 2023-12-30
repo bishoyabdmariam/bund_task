@@ -178,7 +178,7 @@ class _BankCardWidgetState extends State<BankCardWidget> {
                           ),
                       ],
                     ),
-                    SizedBoxes.box30height
+                    SizedBoxes.box30height,
                   ],
                 ),
               );
