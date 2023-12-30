@@ -1,4 +1,5 @@
 import 'package:bundtask/ApiServices/CompaniesService.dart';
+import 'package:bundtask/Presentation/Screens/HomeScreen.dart';
 import 'package:bundtask/main.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -37,9 +38,11 @@ class _BankCardWidgetState extends State<BankCardWidget> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
-    CompanyService.fetchCompanies();
-    setState(() {});
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ),
+    );
   }
 
   @override
